@@ -1,26 +1,23 @@
 from csv import reader
-from itertools import groupby
 from urllib.request import urlopen
 from contextlib import closing
 from common.constants import InputCSV
-
-file_name = 'a'
+from string import ascii_lowercase
 
 
 def run(base_path):
-    clean_data = {}
+    combined_visits = {}
+    all_paths = set()
 
-    # Read files
-    raw_data = read_file(f'{base_path}a.csv')
+    for c in ascii_lowercase:
 
-    # Map Reduce
-    # clean_data = [(row[InputCSV.USER_ID], row[InputCSV.PATH], row[InputCSV.LENGTH]) for row in raw_data]
-    # paths = {}
-    # grouped = []
-    # for k, g in groupby(clean_data, lambda x: x[0]):
-    #     print(k)
-    #
-    # # Output CSV
+        # Read files
+        visits = read_file(f'{base_path}{c}.csv')
+
+        for visit in visits:
+            all_paths.add(visit.path)
+            add_visit(combined_visits, visit.user, visit.path, visit.length)
+
     return 0
 
 
@@ -31,4 +28,22 @@ def read_file(url):
         # pop the first line to remove the header
         data = list(csv_file)
         data.pop(0)
-        return data
+
+        return [PathVisit(row[InputCSV.USER_ID], row[InputCSV.PATH], int(row[InputCSV.LENGTH])) for row in data]
+
+
+def add_visit(final_data, user, path, length):
+    if user not in final_data:
+        final_data[user] = {}
+
+    if path not in final_data[user]:
+        final_data[user][path] = length
+    else:
+        final_data[user][path] += length
+
+
+class PathVisit:
+    def __init__(self, user, path, length):
+        self.user = user
+        self.path = path
+        self.length = length
