@@ -4,4 +4,3 @@ class InputCSV:
     PATH = 2
     USER_AGENT = 3
     USER_ID = 4
-
