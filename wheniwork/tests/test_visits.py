@@ -18,7 +18,7 @@ class TestVisits(unittest.TestCase):
         data = {visit.user_id: {visit.path: visit.length}}
         add_visit(data, visit)
 
-        self.assertEqual(data, {visit.user_id: {visit.path: visit.length*2}})
+        self.assertEqual(data, {visit.user_id: {visit.path: visit.length * 2}})
 
 
 if __name__ == '__main__':

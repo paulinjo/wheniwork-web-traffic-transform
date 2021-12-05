@@ -4,6 +4,11 @@ class PathVisit:
         self.path = path
         self.length = length
 
+    def __eq__(self, other) -> bool:
+        return self.user_id == other.user_id and \
+               self.path == other.path and \
+               self.length == other.length
+
 
 CombinedVisit = dict[str, dict[str, int]]
 
