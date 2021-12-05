@@ -10,10 +10,7 @@ class PathVisit:
                self.length == other.length
 
 
-CombinedVisit = dict[str, dict[str, int]]
-
-
-def add_visit(visits: CombinedVisit, path_visit: PathVisit):
+def add_visit(visits, path_visit: PathVisit):
     """
 
     Add an additional visit to the dictionary of already processed visits. Mutates the `visits` dictionary.

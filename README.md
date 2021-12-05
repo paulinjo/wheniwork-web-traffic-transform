@@ -5,7 +5,7 @@ This program uses vanilla Python 3. No explicit instalation is required other th
 
 ## Running
 1. Clone the repository
-2. From the project root folder run `python -m webtraffictransformation`
+2. From the project root folder run `python3 -m webtraffictransformation`
 
 ### Command Line Arguments
 * `-i` (`--input`): Set the base URL for the raw traffic files; must include the trailing `/`
@@ -14,4 +14,4 @@ This program uses vanilla Python 3. No explicit instalation is required other th
   * Default value: `./output.csv`
 
 ### Running tests
-From the root directory run `python -m unittest discover webtraffictransformation/tests/` 
+From the root directory run `python3 -m unittest discover webtraffictransformation/tests/` 

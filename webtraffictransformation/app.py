@@ -16,4 +16,5 @@ def run(base_input_path, output_file):
             all_paths.add(visit.path)
             add_visit(combined_visits, visit)
 
+    # Turn the set of paths into a list to ensure stable iteration
     write_file(list(all_paths), combined_visits, output_file)
