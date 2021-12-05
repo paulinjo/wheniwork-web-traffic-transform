@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from app import run
+from webtraffictransformation.app import run
 
 DEFAULT_INPUT_PATH = 'https://public.wiwdata.com/engineering-challenge/data/'
 DEFAULT_OUTPUT_FILE = './output.csv'

@@ -2,8 +2,8 @@ from contextlib import closing
 from csv import reader, writer
 from urllib.request import urlopen
 
-from wheniwork.util.constants import InputCSV
-from wheniwork.util.visits import PathVisit
+from webtraffictransformation.util.constants import InputCSV
+from webtraffictransformation.util.visits import PathVisit
 
 
 def read_file(url):

@@ -1,7 +1,7 @@
 from string import ascii_lowercase
 
-from wheniwork.util.files import read_file, write_file
-from wheniwork.util.visits import add_visit
+from webtraffictransformation.util.files import read_file, write_file
+from webtraffictransformation.util.visits import add_visit
 
 
 def run(base_input_path, output_file):

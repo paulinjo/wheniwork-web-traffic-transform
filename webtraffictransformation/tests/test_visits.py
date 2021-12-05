@@ -1,6 +1,6 @@
 import unittest
 
-from wheniwork.util.visits import add_visit, PathVisit
+from webtraffictransformation.util.visits import add_visit, PathVisit
 
 
 class TestVisits(unittest.TestCase):
