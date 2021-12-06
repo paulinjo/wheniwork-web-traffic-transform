@@ -1,6 +1,6 @@
 from string import ascii_lowercase
 
-from webtraffictransformation.util.files import read_file, write_file
+from webtraffictransformation.util.file_utils import read_file, write_file
 from webtraffictransformation.util.visits import add_visit
 
 
