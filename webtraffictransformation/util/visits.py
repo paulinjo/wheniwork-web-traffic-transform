@@ -1,4 +1,4 @@
-class PathVisit:
+class Visit:
     def __init__(self, user_id, path, length):
         self.user_id = user_id
         self.path = path
@@ -10,18 +10,17 @@ class PathVisit:
                self.length == other.length
 
 
-def add_visit(visits, path_visit: PathVisit):
-    """
+class CombinedVisits:
+    data = {}
 
-    Add an additional visit to the dictionary of already processed visits. Mutates the `visits` dictionary.
+    def __init__(self) -> None:
+        super().__init__()
 
-    :param visits: Dictionary that maps a user_id to a set of paths => lengths
-    :param path_visit:
-    """
-    if path_visit.user_id not in visits:
-        visits[path_visit.user_id] = {}
+    def add(self, visit: Visit):
+        if visit.user_id not in self.data:
+            self.data[visit.user_id] = {}
 
-    if path_visit.path not in visits[path_visit.user_id]:
-        visits[path_visit.user_id][path_visit.path] = path_visit.length
-    else:
-        visits[path_visit.user_id][path_visit.path] += path_visit.length
+        if visit.path not in self.data[visit.user_id]:
+            self.data[visit.user_id][visit.path] = visit.length
+        else:
+            self.data[visit.user_id][visit.path] += visit.length

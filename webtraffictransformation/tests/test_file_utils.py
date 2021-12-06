@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch, mock_open
 
 import webtraffictransformation.util.file_utils
 from webtraffictransformation.util.file_utils import read_file, write_file
-from webtraffictransformation.util.visits import PathVisit
+from webtraffictransformation.util.visits import Visit, CombinedVisits
 
 
 class TestReadFile(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestReadFile(unittest.TestCase):
         webtraffictransformation.util.file_utils.reader = lambda x: [self.header, row]
 
         result = read_file('url')
-        self.assertEqual(result, [PathVisit('378', '/', 7)])
+        self.assertEqual(result, [Visit('378', '/', 7)])
 
     def test_read_file_two_rows_same_user(self):
         row1 = ['1', '7', '/', 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0	',
@@ -33,7 +33,7 @@ class TestReadFile(unittest.TestCase):
         webtraffictransformation.util.file_utils.reader = lambda x: [self.header, row1, row2]
 
         result = read_file('url')
-        self.assertEqual(result, [PathVisit('378', '/', 7), PathVisit('378', '/', 7)])
+        self.assertEqual(result, [Visit('378', '/', 7), Visit('378', '/', 7)])
 
     def test_read_file_two_rows_different_user(self):
         row1 = ['1', '7', '/', 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0	',
@@ -43,26 +43,25 @@ class TestReadFile(unittest.TestCase):
         webtraffictransformation.util.file_utils.reader = lambda x: [self.header, row1, row2]
 
         result = read_file('url')
-        self.assertEqual(result, [PathVisit('378', '/', 7), PathVisit('100', '/', 7)])
+        self.assertEqual(result, [Visit('378', '/', 7), Visit('100', '/', 7)])
 
 
 class TestWriteFile(unittest.TestCase):
     mockCsv = []
-
-    # webtraffictransformation.util.files. = lambda x: MagicMock()
 
     def setUp(self):
         self.mockCsv = []
 
     @patch('builtins.open', new_callable=mock_open())
     def test_write_no_data(self, mock_open_file):
-        write_file([], {}, 'path')
+        write_file([], CombinedVisits(), 'path')
         mock_open_file.return_value.__enter__().write.assert_called_once_with('user_id\r\n')
 
     @patch('builtins.open', new_callable=mock_open())
     def test_write_one_user(self, mock_open_file):
         paths = ['/test1', '/test2']
-        visits = {'1': {'/test1': 100, '/test2': 200}}
+        visits = CombinedVisits()
+        visits.data = {'1': {'/test1': 100, '/test2': 200}}
 
         write_file(paths, visits, 'path')
         mock_open_file.return_value.__enter__().write.assert_called_with('1,100,200\r\n')

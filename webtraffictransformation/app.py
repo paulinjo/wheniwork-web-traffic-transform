@@ -1,11 +1,11 @@
 from string import ascii_lowercase
 
 from webtraffictransformation.util.file_utils import read_file, write_file
-from webtraffictransformation.util.visits import add_visit
+from webtraffictransformation.util.visits import CombinedVisits
 
 
 def run(base_input_path, output_file):
-    combined_visits = {}
+    combined_visits = CombinedVisits()
     all_paths = set()
 
     for c in ascii_lowercase:
@@ -14,7 +14,7 @@ def run(base_input_path, output_file):
 
         for visit in visits:
             all_paths.add(visit.path)
-            add_visit(combined_visits, visit)
+            combined_visits.add(visit)
 
     # Turn the set of paths into a list to ensure stable iteration
     write_file(list(all_paths), combined_visits, output_file)

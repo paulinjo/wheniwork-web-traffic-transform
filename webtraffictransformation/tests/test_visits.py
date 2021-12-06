@@ -1,24 +1,25 @@
 import unittest
 
-from webtraffictransformation.util.visits import add_visit, PathVisit
+from webtraffictransformation.util.visits import CombinedVisits, Visit
 
 
 class TestVisits(unittest.TestCase):
 
     def test_unseen_path(self):
-        data = {}
-        visit = PathVisit('1', '/path', 10)
+        visits = CombinedVisits()
+        visit = Visit('1', '/path', 10)
 
-        add_visit(data, visit)
+        visits.add(visit)
 
-        self.assertEqual(data, {visit.user_id: {visit.path: visit.length}})  # add assertion here
+        self.assertEqual(visits.data, {visit.user_id: {visit.path: visit.length}})
 
     def test_seen_path(self):
-        visit = PathVisit('1', '/path', 10)
-        data = {visit.user_id: {visit.path: visit.length}}
-        add_visit(data, visit)
+        visit = Visit('1', '/path', 10)
+        visits = CombinedVisits()
+        visits.data = {visit.user_id: {visit.path: visit.length}}
+        visits.add(visit)
 
-        self.assertEqual(data, {visit.user_id: {visit.path: visit.length * 2}})
+        self.assertEqual(visits.data, {visit.user_id: {visit.path: visit.length * 2}})
 
 
 if __name__ == '__main__':
